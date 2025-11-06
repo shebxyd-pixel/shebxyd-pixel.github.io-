@@ -275,29 +275,26 @@
             resultado.textContent = mensaje;
             resultado.style.color = color;
         }
-
         function actualizarBarraIMC(imc) {
             const imcBar = document.getElementById("imcBar");
             const imcPointer = document.getElementById("imcPointer");
             const barraAncho = imcBar.offsetWidth;
-
-            // Rango de IMC considerado (ajusta según tus necesidades)
-            const imcMinimo = 15;
-            const imcMaximo = 40;
-
-            // Calcula la posición del puntero en función del IMC
+        
+            // Rango de IMC y anchos correspondientes a cada categoría
+            const imcMinimo = 15; // Valor mínimo del IMC que se mostrará
+            const imcMaximo = 40; // Valor máximo del IMC que se mostrará
+        
             let posicion = ((imc - imcMinimo) / (imcMaximo - imcMinimo)) * barraAncho;
-
-            // Limita la posición dentro de la barra
+        
+            // Limitar la posición dentro de la barra
             posicion = Math.max(0, Math.min(posicion, barraAncho));
-
-            // Aplica la posición al puntero
+        
+             //Aplica la posición al puntero
             imcPointer.style.left = posicion + "px";
-
+        
             // Aplica el ancho a la barra
             imcBar.style.width = posicion + "px";
-        }
-
+}
         function mostrarModal(consejos) {
             document.getElementById("consejosTextoModal").innerText = consejos;
             document.getElementById("consejosModal").style.display = "block";
@@ -310,6 +307,7 @@
 </body>
 
 </html>
+
 
 
 
