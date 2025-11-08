@@ -143,6 +143,22 @@
             color: #444;
             text-align: left;
         }
+                          .container { position: relative; }
+                  .logo {
+                      position: absolute;
+                      top: 18px;
+                      right: 18px;
+                      width: 64px;
+                      height: 64px;
+                      z-index: 10;
+                  }
+                  .logo img {
+                      width: 100%;
+                      height: 100%;
+                      object-fit: contain;
+                      display: block;
+                  }
+
 
         /* Media query para pantallas más pequeñas */
         @media (max-width: 768px) {
@@ -208,6 +224,7 @@
 <body>
 
     <div class="container">
+        <div class="logo"><img src="cobaem-87887.png" alt="Logo"></div>
         <h1>Calculadora de IMC y Bienestar</h1>
 
         <label for="peso">Peso (kg):</label>
