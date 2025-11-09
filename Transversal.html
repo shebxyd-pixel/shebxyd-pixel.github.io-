@@ -9,34 +9,38 @@
         body {
             margin: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(to bottom, #3498db, #a9c6fa); /* Fondo degradado */
-            height: 100vh; /* Asegura que el degradado cubra toda la pantalla */
+            background: linear-gradient(to bottom, #3498db, #a9c6fa);
+            min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
+            padding-top: 32px;
+            box-sizing: border-box;
         }
 
         /* Contenedor principal */
         .container {
-            background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3); /* Sombra para el efecto flotante */
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             padding: 30px;
-            width: 80%; /* Ajusta el ancho según sea necesario */
-            max-width: 900px; /* Ancho máximo del contenedor */
-            text-align: center;
+            width: 80%;
+            max-width: 900px;
         }
 
         /* Estilos para el encabezado */
         h1 {
             color: #2c3e50;
             margin-bottom: 20px;
+            text-align: center;
         }
 
         /* Estilos para el texto */
         p {
             color: #34495e;
             line-height: 1.6;
+            text-align: justify;
         }
 
         /* Estilos para la imagen */
@@ -50,12 +54,12 @@
         /* Estilos para la gráfica */
         #grafica {
             width: 100%;
-            height: 300px; /* Ajusta la altura según sea necesario */
+            height: 300px;
             background-color: #ecf0f1;
             border-radius: 10px;
             margin-bottom: 20px;
         }
-                .container { position: relative; }
+
         .logo {
             position: absolute;
             top: 18px;
@@ -69,51 +73,67 @@
             height: 100%;
             object-fit: contain;
             display: block;
+            padding-top: 10px;
         }
     </style>
 </head>
 <body>
-     <div class="container">
+    <div class="container">
         <div class="logo"><img src="cobaem-87887.png" alt="Logo"></div>
-        <h1>Proyecto transversal </h1>
-           <h1>"Creacion de hojas a base de cascaras" </h1>
+        <h1>Proyecto transversal</h1>
+        <h1>"Creacion de hojas a base de cascaras"</h1>
         <img src="https://via.placeholder.com/600x200" alt="Imagen de ejemplo">
-        <p>Este es un ejemplo de texto en un contenedor atractivo. Puedes agregar más contenido aquí, como imágenes y gráficas.</p>
+        <p></p>
+        <p></p>
         <div id="grafica">
-            <!-- Aquí iría el código de la gráfica (ejemplo con JavaScript) -->
+            <canvas id="miGrafica" width="600" height="300" style="max-width:100%;"></canvas>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-        // Ejemplo de código JavaScript para generar una gráfica sencilla
-        const grafica = document.getElementById('grafica');
-        const ctx = grafica.getContext('2d');
+        window.addEventListener('load', function () {
+            const ctx = document.getElementById('miGrafica').getContext('2d');
+            const data = {
+                labels: ['Cáscaras de naranja', 'Vasos de agua', 'Hojas blancas'],
+                datasets: [{
+                    data: [5, 3, 2],
+                    backgroundColor: ['#FF9F40', '#36A2EB', '#FF6384'],
+                    hoverOffset: 6
+                }]
+            };
 
-        const data = {
-            labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
-            datasets: [{
-                label: 'Ventas',
-                data: [65, 59, 80, 81, 56],
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
-            }]
-        };
-
-        const config = {
-            type: 'bar',
-            data: data,
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+            const config = {
+                type: 'pie',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Cantidad de materiales usados durante la fabricacion de las hojas de papel'
+                        },
+                        legend: {
+                            position: 'bottom'
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const label = context.label || '';
+                                    const value = context.parsed || 0;
+                                    const datasetData = context.chart.data.datasets[context.datasetIndex].data || [];
+                                    const total = datasetData.reduce((a, b) => a + b, 0);
+                                    const percent = ((value / (total || 1)) * 100).toFixed(1);
+                                    return `${label}: ${value} (${percent}%)`;
+                                }
+                            }
+                        }
                     }
                 }
-            }
-        };
+            };
 
-        const myChart = new Chart(ctx, config);
+            new Chart(ctx, config);
+        });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </body>
 </html>
